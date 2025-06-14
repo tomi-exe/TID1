@@ -1,0 +1,8 @@
+.no-border {
+    border:0px;
+}
+
+#load {
+    background: #edf1f5;
+    padding-top: 5px; 
+}

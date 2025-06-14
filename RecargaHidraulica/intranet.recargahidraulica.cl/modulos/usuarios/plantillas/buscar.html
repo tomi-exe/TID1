@@ -1,0 +1,111 @@
+$(".perfilesAcceso_ST").select2({
+                   width:'resolve',
+                   ajax: {
+                       url: "../perfilesAcceso/listadoJson.php",
+                       type: "POST",
+                       dataType: "json",
+                       delay: 250,
+                       data: function(params) {
+                           return {
+                               _busqueda: params.term,
+                           };
+                       },
+                       processResults: function(data,params) {
+                           return {
+                               results: $.map(data.data, function(item) {
+                                   return {
+                                       text: item.nombreLista,
+                                       id: item.id
+                                   }
+                               })
+                           };
+                       },
+                       cache: false
+                   },
+                   miniumInputLength: 1,
+               }).on("select2:select",function(e) {
+                   window.ultimoSelect=$(this).val();
+               });
+<div style="height:98%;overflow:auto;">
+<div data-dojo-type="dijit/layout/TabContainer" doLayout="false">
+    
+    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-id="tab1<tag:jsId />" id="tab1<tag:jsId />" data-dojo-props="title:'General'">
+        
+        <div data-dojo-type="dijit/TitlePane" data-dojo-id='bloqueDatosGenerales<tag:jsId />' id="bloqueDatosGenerales<tag:jsId />" data-dojo-props="title:'Datos Generales'">
+            <table class="formulario">
+                
+                <tr>
+                    <td class="etiquetaCampo">
+                        Nombres
+                    </td>
+                    <td>
+                        <input type="text" name="nombres" data-dojo-id="nombres<tag:jsId />" required="false" class="campoCampo" value="<tag:nombres />" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="trim:true">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="etiquetaCampo">
+                        Apellido Paterno
+                    </td>
+                    <td>
+                        <input type="text" name="apellidoPaterno" data-dojo-id="apellidoPaterno<tag:jsId />" required="false" class="campoCampo" value="<tag:apellidoPaterno />" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="trim:true">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div data-dojo-type="dijit/TitlePane" data-dojo-id='bloqueDatosAcceso<tag:jsId />' id="bloqueDatosAcceso<tag:jsId />" data-dojo-props="title:'Datos De Acceso'">
+            <table class="formulario">
+                
+                <tr>
+                    <td class="etiquetaCampo">
+                        Perfil
+                    </td>
+                    <td>
+                        <div data-dojo-type="dojox/data/QueryReadStore" data-dojo-id="perfilAcceso_ST<tag:jsId />" data-dojo-props="url:'modulos/perfilesAcceso/listadoJson.php'"></div>
+            <div name="perfilAcceso" data-dojo-id="perfilAcceso<tag:jsId />" class="campoCampo" required="false" value="<tag:perfilAcceso />" data-dojo-type="dijit/form/FilteringSelect" data-dojo-props="store:perfilAcceso_ST<tag:jsId />,searchAttr:'nombre',labelAttr:'nombreLista',pageSize:10,searchDelay:500"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="etiquetaCampo">
+                        Correo
+                    </td>
+                    <td>
+                        <input type="text" name="correo" data-dojo-id="correo<tag:jsId />" required="false" class="campoCampo" value="<tag:correo />" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="trim:true">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="etiquetaCampo">
+                        Habilitado
+                    </td>
+                    <td>
+                        <input type="checkbox" name="habilitado" data-dojo-type="dijit/form/CheckBox" data-dojo-id="habilitado<tag:jsId />" >
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<button dojoType="dijit.form.Button" iconClass="dijitIconSearch">
+    Buscar
+    <script type="dojo/method" event="onClick">
+        listadoPrincipal.setQuery({
+            
+            nombres: nombres<tag:jsId />.value,
+            apellidoPaterno: apellidoPaterno<tag:jsId />.value,
+            perfilAcceso: perfilAcceso<tag:jsId />.value,
+            correo: correo<tag:jsId />.value,
+            habilitado: habilitado<tag:jsId />.checked ? 1 : 0,
+            guardarBusqueda:'1'
+        });
+        cuadroDialogo.hide();
+    </script>
+</button>
+<button dojoType="dijit.form.Button" iconClass="dijitIconClear">
+    Limpiar
+    <script type="dojo/method" event="onClick">
+        listadoPrincipal.setQuery({
+            guardarBusqueda:'1'
+        });
+        cuadroDialogo.hide();
+    </script>
+</button>
+</div>

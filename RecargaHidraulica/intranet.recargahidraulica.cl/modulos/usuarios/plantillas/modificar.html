@@ -1,0 +1,161 @@
+<tag:header />
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    <tag:moduloAccion /> registro
+                    <small><tag:moduloNombre /></small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="../inicio"><i class="fa fa-dashboard"></i>Inicio</a></li>
+                    <li><a href="listado.php"><tag:moduloNombre /></a></li>
+                    <li class="active"><tag:moduloAccion /> registro</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <form class="form-horizontal" id="formulario" action="guardar.php" METHOD="POST">
+                    <input type="hidden" name="id" value="<tag:id />">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            
+                            <li id="litab1"><a href="#tab1" data-toggle="tab">General</a></li>
+                            <li class="pull-right"><a href="javascript:$('#formulario').submit();"><i class="fa fa-save"></i> Guardar</a></li>
+                            <if:modificar>
+                            <li class="pull-right"><a href="ver.php?id=<tag:id />"><i class="fa fa-undo"></i> Cancelar</a></li>
+                            <else:modificar>
+                            <li class="pull-right"><a href="listado.php"><i class="fa fa-undo"></i> Cancelar</a></li>
+                            </if:modificar>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        
+                        <div class="tab-pane" id="tab1">
+                            
+                            <div class="box box-primary box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Datos Generales</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                
+                                <div class="form-group">
+                                    <label for="nombres<tag:jsId />" class="col-sm-2 control-label">Nombres</label>
+                                    <div class="col-sm-10"><input type="text" name="nombres" id="nombres<tag:jsId />" placeholder="" class="form-control text-capitalize" required maxlength="255" value="<tag:nombres />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellidoPaterno<tag:jsId />" class="col-sm-2 control-label">Apellido Paterno</label>
+                                    <div class="col-sm-10"><input type="text" name="apellidoPaterno" id="apellidoPaterno<tag:jsId />" placeholder="" class="form-control text-capitalize" required maxlength="255" value="<tag:apellidoPaterno />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellidoMaterno<tag:jsId />" class="col-sm-2 control-label">Apellido Materno</label>
+                                    <div class="col-sm-10"><input type="text" name="apellidoMaterno" id="apellidoMaterno<tag:jsId />" placeholder="" class="form-control text-capitalize"  maxlength="255" value="<tag:apellidoMaterno />" > </div>
+
+                                </div>
+                            </div>
+                        </div>
+                            <div class="box box-primary box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Datos De Acceso</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                
+                                <div class="form-group">
+                                    <label for="perfilAcceso<tag:jsId />" class="col-sm-2 control-label">Perfil</label>
+                                    <div class="col-sm-10"><select name="perfilAcceso" id="perfilAcceso<tag:jsId />" placeholder="" class="form-control perfilesAcceso_ST ajaxStore" required ><option value="<tag:perfilAcceso />" selected><tag:perfilAcceso_nombreLista /></option>                                </select></div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="correo<tag:jsId />" class="col-sm-2 control-label">Correo</label>
+                                    <div class="col-sm-10"><input type="text" name="correo" id="correo<tag:jsId />" placeholder="" class="form-control text-lowercase" required maxlength="255" value="<tag:correo />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="contrasena<tag:jsId />" class="col-sm-2 control-label">Contraseña</label>
+                                    <div class="col-sm-10"><input type="text" name="contrasena" id="contrasena<tag:jsId />" placeholder="" class="form-control" required maxlength="255" value="<tag:contrasena />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="habilitado<tag:jsId />" class="col-sm-2 control-label">Habilitado</label>
+                                    <div class="col-sm-10"><div class="checkbox icheck"><input type="checkbox" name="habilitado" id="habilitado<tag:jsId />" <tag:habilitado />></div></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <script>
+            function ajaxStores() {
+                window.ultimoSelect='';
+                
+                
+                $(".perfilesAcceso_ST").select2({
+                   width:'resolve',
+                   ajax: {
+                       url: "../perfilesAcceso/listadoJson.php",
+                       type: "POST",
+                       dataType: "json",
+                       delay: 250,
+                       data: function(params) {
+                           return {
+                               _busqueda: params.term,
+                           };
+                       },
+                       processResults: function(data,params) {
+                           return {
+                               results: $.map(data.data, function(item) {
+                                   return {
+                                       text: item.nombreLista,
+                                       id: item.id
+                                   }
+                               })
+                           };
+                       },
+                       cache: false
+                   },
+                   miniumInputLength: 1,
+               }).on("select2:select",function(e) {
+                   window.ultimoSelect=$(this).val();
+               });
+            }
+
+            $(function() {
+                $('#tab<tag:tab />').addClass("active");
+                $('#litab<tag:tab />').addClass("active");
+
+                // Iniciar extensiones UI
+                $(".select2").select2();
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-blue',
+                    radioClass: 'iradio_flat-blue'
+                });
+
+                ajaxStores();
+
+                
+                
+
+                $('#formulario').validate({
+                    submitHandler: function(form,evt) {
+                        evt.preventDefault();
+                        procesarFormulario('formulario');
+                    }
+                });
+            });
+        </script>
+    <tag:footer />
+</body>
+</html>

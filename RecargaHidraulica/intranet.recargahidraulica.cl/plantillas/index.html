@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title><tag:nombreAplicacion /></title>
+
+        <!-- Webapp Google Chrome -->
+        <link rel="manifest" href="/manifest.json">
+
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="javascript/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <!--
+        <link rel="stylesheet" href="javascript/font-awesome-4.7.0/css/font-awesome.min.css">
+        -->
+        <link rel="stylesheet" href="javascript/AdminLTE/bower_components/font-awesome/css/font-awesome.min.css">
+        <!-- AdminLTE -->
+        <link rel="stylesheet" href="javascript/AdminLTE/dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" href="javascript/AdminLTE/dist/css/skins/_all-skins.min.css">
+        <!-- iCheck -->
+        <link rel="stylesheet" href="javascript/AdminLTE/plugins/iCheck/flat/blue.css">
+        <!-- Principal -->
+        <link rel="stylesheet" href="estilos/principal.css">
+
+        <!-- Jquery -->
+        <script src="javascript/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap -->
+        <script src="javascript/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- jQuery Validation -->
+        <script src="javascript/jquery/validation/jquery.validate.min.js"></script>
+        <script src="javascript/jquery/validation/localization/messages_es.min.js"></script>
+        <!-- SlimScroll -->
+        <script src="javascript/AdminLTE/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+        <!-- iCheck -->
+        <script src="javascript/AdminLTE/plugins/iCheck/icheck.min.js"></script>
+        <!-- FastClick -->
+        <script src="javascript/AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
+        
+        <!-- AdminLTE App -->
+        <script src="javascript/AdminLTE/dist/js/adminlte.min.js"></script>
+        <!-- Interfaz -->
+        <script src="javascript/interfaz.js?<tag:revision />"></script>
+    </head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <b>RH</b> | Intranet
+        </div>
+        <div class="login-box-body">
+            <p class="login-box-msg">Ingrese sus datos para iniciar sesión</p>
+            <form action="login.php" method="post" id="formulario">
+                <div class="form-group has-feedback">
+                    <input type="email" maxlength="255" name="usuario" class="form-control" placeHolder="Correo" value="<tag:usuario />" required>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" maxlength="30" name="contrasena" class="form-control" placeHolder="Contraseña" required>
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input name="recordar" type="checkbox" <tag:recordar />>Recuérdeme
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
+                    </div>
+                </div>
+                <div class="text-center" id="formularioMensaje"><tag:mensaje /></div>
+            </form>
+            <a href="#">Olvidé mi contraseña</a>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_flat-blue',
+                radioClass: 'iradio_flat-blue'
+            });
+
+            $('#formulario').validate({
+                submitHandler: function(form,evt) {
+                    evt.preventDefault();
+                    procesarFormulario('formulario');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

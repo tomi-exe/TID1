@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><tag:nombreAplicacion /></title>
+
+    <!-- Webapp Google Chrome -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="../../javascript/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../javascript/AdminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="../../javascript/otros/datatables/extensions/RowReorder/css/rowReorder.bootstrap.css">
+    <link rel="stylesheet" href="../../javascript/otros/datatables/extensions/Responsive/css/responsive.dataTables.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../javascript/AdminLTE/bower_components/font-awesome/css/font-awesome.min.css">
+    <!--
+    <link rel="stylesheet" href="../../javascript/font-awesome-4.7.0/css/font-awesome.min.css">
+    -->
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="../../javascript/jquery/ui/jquery-ui.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="../../javascript/AdminLTE/bower_components/select2/dist/css/select2.min.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="../../javascript/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="../../javascript/AdminLTE/plugins/iCheck/flat/blue.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="../../javascript/AdminLTE/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../javascript/AdminLTE/dist/css/skins/_all-skins.min.css">
+    
+    <!-- Propio -->
+    <link rel="stylesheet" href="../../estilos/principal.css">
+
+    <!-- Jquery -->
+    <script src="../../javascript/AdminLTE/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../../javascript/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Select2 -->
+    <script src="../../javascript/AdminLTE/bower_components/select2/dist/js/select2.full.min.js"></script>
+    <!-- Bootstrap datepicker -->
+    <script src="../../javascript/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="../../javascript/AdminLTE/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- iCheck -->
+    <script src="../../javascript/AdminLTE/plugins/iCheck/icheck.min.js"></script>
+    <!-- FastClick -->
+    <script src="../../javascript/AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- DataTables -->
+    <script src="../../javascript/AdminLTE/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../../javascript/AdminLTE/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../../javascript/otros/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../javascript/otros/datatables/extensions/RowReorder/js/dataTables.rowReorder.min.js"></script>
+    <!-- jQuery UI -->
+    <script src="../../javascript/AdminLTE/plugins/jQueryUI/jquery-ui.min.js"></script>
+    <!-- jQuery Validation -->
+    <script src="../../javascript/jquery/validation/jquery.validate.min.js"></script>
+    <script src="../../javascript/jquery/validation/localization/messages_es.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../javascript/AdminLTE/dist/js/adminlte.min.js"></script>
+    <!-- Chart.JS -->
+    <script src="../../javascript/otros/chart.js/Chart.bundle.min.js"></script>
+    <!-- Interfaz -->
+    <script src="../../javascript/interfaz.js?<tag:revision />"></script>
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini">
+    <div class="modal fade modal-default" id="cuadroConfirmacion" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="" METHOD="POST" id="cuadroConfirmacionFormulario">
+                <input type="hidden" name="id" value="" id="cuadroConfirmacionId">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="cuadroConfirmacionTitulo"></h4>
+                </div>
+                <div class="modal-body" id="cuadroConfirmacionMensaje"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-danger">Confirmar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-default" id="cuadroDialogo" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="cuadroDialogoTitulo"></h4>
+                </div>
+                <div class="modal-body" id="cuadroDialogoMensaje"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <header class="main-header">
+            <a href="index.php" class="logo">
+                <span class="logo-mini"><b>RH</b></span>
+                <span class="logo-lg"><b>RH</b> | Intranet</span>
+            </a>
+
+            <nav class="navbar navbar-static-top">
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Menu</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown messages-menu">
+                        </li>
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user"></i> <tag:usuarioNombre />
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="#"><i class="fa fa-lock"></i> Cambiar contraseña</a>
+                                        </li>
+                                        <li>
+                                            <a href="../../salir.php"><i class="fa fa-power-off"></i> Cerrar sesión</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown tasks-menu">
+                        </li>
+                        <li class="dropdown user user-menu">
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <aside class="main-sidebar">
+            <section class="sidebar">
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">MENU PRINCIPAL</li>
+                    <loop:menu>
+                    <li class="treeview <tag:menu[].clases />">
+                        <a href="#">
+                            <i class="fa fa-arrow-circle-right"></i>
+                            <span><tag:menu[].nombre /></span>
+                            <span class="pull-right-containter">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <loop:menu[].modulos>
+                            <li><a href="../<tag:menu[].modulos[].id />/index.php"><i class="<tag:menu[].modulos[].icono />"></i> <tag:menu[].modulos[].nombre /></a></li>
+                            </loop:menu[].modulos>
+                        </ul>
+                    </li>
+                    </loop:menu>
+                </ul>
+            </section>
+        </aside>

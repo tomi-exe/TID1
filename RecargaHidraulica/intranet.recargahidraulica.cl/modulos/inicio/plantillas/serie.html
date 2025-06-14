@@ -1,0 +1,192 @@
+<tag:header />
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                <tag:tipo /> - <tag:numero />
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="index.php"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                    <li class="activo">Sensor</li>
+                </ol>
+            </section>
+
+            <section class="content">
+            	<div class="box box-solid">
+            		 <div class="box-header">
+						<!-- tools box -->
+						<div class="pull-right box-tools">
+                			<button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+								<i class="fa fa-minus"></i>
+							</button>
+						</div>
+						<i class="fa fa-area-chart"></i>
+            			<h3 class="box-title">
+							Ultimos 24 eventos
+						</h3>
+						
+					</div>
+					<div class="box-body">
+						<div class="chart">
+                			<canvas id="grafico24horas" style="height:280px"></canvas>
+            			</div>
+					</div>
+					<div class="box-footer">
+						
+					</div>
+				</div>
+            	
+            	<div class="box box-solid">
+            		 <div class="box-header">
+						<!-- tools box -->
+						<div class="pull-right box-tools">
+                			<button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Colapsar" style="margin-right: 5px;">
+								<i class="fa fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-primary btn-sm pull-right" title="Descargar" style="margin-right: 5px;" onClick="exportar();">
+								<i class="fa fa-file-excel-o"></i>
+							</button>
+						</div>
+						<i class="fa fa-table"></i>
+            			<h3 class="box-title">
+							Serie de datos
+						</h3>
+					</div>
+					<div class="box-body">
+							Desde&nbsp;&nbsp;&nbsp;<input type="text" name="desde" id="desde">
+							Hasta <input type="text" name="hasta" id="hasta">
+							<button type="button" class="btn" onClick="filtrar();">
+								<i class="fa fa-filter"></i>
+							</button>
+						
+						<table id="datosPrincipal" class="table table-bordered table-stripped">
+                            <thead>
+                                <tr>
+                                	<th>&nbsp;</th>
+                                    <th>Fecha</th>
+                                    <th>Humedad 1 (%)</th>
+                                    <th>Humedad 2 (%)</th>
+                                    <th>Humedad 3 (%)</th>
+                                </tr>
+                            </thead>
+                        </table>
+					</div>
+					<div class="box-footer">
+						
+					</div>
+				</div>
+            </section>
+        </div>
+<tag:footer />
+	<script>
+		var datosPrincipal;
+		
+		function graficar() {
+		    var grafico=new Chart(document.getElementById("grafico24horas"), {
+		    	type: 'line',
+				data: {
+	    			labels: [
+	            		<loop:etiquetas>
+	            		'<tag:etiquetas[] />',
+	            		</loop:etiquetas>
+	        		],
+	    			datasets: [{ 
+	        			data: [<tag:data1 />],
+			    		label: "Humedad 1",
+        				borderColor: "#3e95cd",
+        				fill: false
+    				}, { 
+        				data: [<tag:data2 />],
+        				label: "Humedad 2",
+        				borderColor: "#8e5ea2",
+        				fill: false
+    				}, { 
+        				data: [<tag:data3 />],
+        				label: "Humedad 3",
+        				borderColor: "#007f00",
+        				fill: false
+    				}
+    				]
+				},
+				options: {
+					title: {
+						display: true,
+						text: ''
+					}
+				}
+		    });
+		}
+		
+		function filtrar() {
+			datosPrincipal.column(1).search($('#desde').val() + ":" +$('#hasta').val()).draw();
+		}
+		
+		function exportar() {
+			var data=datosPrincipal.ajax.params();
+			var urlParam=$.param(data);
+			
+			window.location.href='exportar.php?pid=<tag:id />&' + urlParam;
+			
+		}
+    	
+    	
+    	$(function () {
+    		// Preparamos tabla de datos
+    		var iconoVer=function(data,type,row) {
+                if(type=='display') {
+                    return('&nbsp;');
+                }
+                return(data);
+            }
+            datosPrincipal=$('#datosPrincipal').DataTable({
+            	dom: 'lrtip',
+                responsive:false,
+                searching:true,
+                language: {
+                    url:"../../javascript/soporte/jquery.dataTables.es.lang"
+                },
+                processing:true,
+                serverSide:true,
+                ajax: {
+                    url:"serieJson.php?id=<tag:id />",
+                    type:"POST",
+                    dataType:"json",
+                    cache:false
+                },
+                rowId: 'id',
+                columns: [
+                	{data:"id",sortable:false,render:iconoVer},
+                    {data:"fecha"},
+                    {data:"humedadPorcentaje1"},
+                    {data:"humedadPorcentaje2"},
+                    {data:"humedadPorcentaje3"},
+                ],
+                order: [[ 1,"desc" ]]
+            });
+            
+            // Preparamos campos de fecha para filtro
+			$("#desde").datepicker({
+				defaultDate: "+1w",
+				changeMonth: true,
+				numberOfMonths: 2,
+				dateFormat: 'yy-mm-dd',
+				onClose: function( selectedDate ) {
+					$("#hasta").datepicker("option","minDate",selectedDate);
+				}
+			});
+			$("#hasta").datepicker({
+				defaultDate: "+1w",
+				changeMonth: true,
+				numberOfMonths: 2,
+				dateFormat: 'yy-mm-dd',
+				onClose: function( selectedDate ) {
+					$("#desde").datepicker("option","maxDate",selectedDate);
+				}
+			});
+			
+			// Graficamos datos
+			graficar();
+    	});
+    	
+    </script>		
+</body>
+</html>

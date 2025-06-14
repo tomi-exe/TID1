@@ -1,0 +1,75 @@
+<tag:header />
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    <tag:nombreLista />
+                    <small><tag:moduloNombre /></small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="../inicio"><i class="fa fa-dashboard"></i>Inicio</a></li>
+                    <li><a href="listado.php"><tag:moduloNombre /></a></li>
+                    <li class="active"><tag:nombre /></li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <form class="form-horizontal" id="formulario">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            
+                            <li id="litab1"><a href="#tab1" data-toggle="tab">General</a></li>
+                            <li class="dropdown pull-right">
+                                <a class="dropdown-toggle text-muted" data-toggle="dropdown" href="#"><i class="fa fa-gear"></i></a>
+                                <ul class="dropdown-menu">
+                                    <if:mostrarModificar>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="modificar.php?id=<tag:id />"><i class="fa fa-edit"></i> Modificar</a></li>
+                                    </if:mostrarModificar>
+                                    <if:mostrarEliminar>
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:cuadroEliminacion('<tag:moduloActual />','<tag:id />');"><i class="fa fa-trash-o"></i> Eliminar</a></li>
+                                    </if:mostrarEliminar>
+                                    
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        
+                        <div class="tab-pane" id="tab1">
+                            
+                            <div class="box box-primary box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Datos Generales</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                
+                                <div class="form-group">
+                                    <label for="nombre" class="col-sm-2 control-label">Nombre</label>
+                                    <div class="col-sm-10">
+                                        <span class="form-control no-border"><tag:nombre /></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <script>
+            $(function() {
+                $('#tab<tag:tab />').addClass("active");
+                $('#litab<tag:tab />').addClass("active");
+
+                
+            });
+        </script>
+
+<tag:footer />
+</body>
+</html>

@@ -1,0 +1,115 @@
+$(".comunas_ST").select2({
+                   width:'resolve',
+                   ajax: {
+                       url: "../comunas/listadoJson.php",
+                       type: "POST",
+                       dataType: "json",
+                       delay: 250,
+                       data: function(params) {
+                           return {
+                               _busqueda: params.term,
+                           };
+                       },
+                       processResults: function(data,params) {
+                           return {
+                               results: $.map(data.data, function(item) {
+                                   return {
+                                       text: item.nombreLista,
+                                       id: item.id
+                                   }
+                               })
+                           };
+                       },
+                       cache: false
+                   },
+                   miniumInputLength: 1,
+               }).on("select2:select",function(e) {
+                   window.ultimoSelect=$(this).val();
+               });
+<div style="height:98%;overflow:auto;">
+<div data-dojo-type="dijit/layout/TabContainer" doLayout="false">
+    
+    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-id="tab1<tag:jsId />" id="tab1<tag:jsId />" data-dojo-props="title:'General'">
+        
+        <div data-dojo-type="dijit/TitlePane" data-dojo-id='bloqueDatosGenerales<tag:jsId />' id="bloqueDatosGenerales<tag:jsId />" data-dojo-props="title:'Datos Generales'">
+            <table class="formulario">
+                
+                <tr>
+                    <td class="etiquetaCampo">
+                        Número
+                    </td>
+                    <td>
+                        <input type="text" name="numero" data-dojo-id="numero<tag:jsId />" required="false" class="campoCampo" value="<tag:numero />" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="trim:true">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="etiquetaCampo">
+                        Nombre
+                    </td>
+                    <td>
+                        <input type="text" name="nombre" data-dojo-id="nombre<tag:jsId />" required="false" class="campoCampo" value="<tag:nombre />" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="trim:true">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="etiquetaCampo">
+                        Tipo
+                    </td>
+                    <td>
+                        <select required="false" data-dojo-id="tipo<tag:jsId />" name="tipo" MULTIPLE ROWS="5" data-dojo-type="dijit.form.MultiSelect" value="<tag:tipo />">
+                <loop:tipoArr>
+                <option value="<tag:tipoArr[].id />" <tag:tipoArr[].selected />><tag:tipoArr[].nombre /></option>
+                </loop:tipoArr>
+            </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div data-dojo-type="dijit/TitlePane" data-dojo-id='bloqueDatosUbicacion<tag:jsId />' id="bloqueDatosUbicacion<tag:jsId />" data-dojo-props="title:'Ubicación'">
+            <table class="formulario">
+                
+            </table>
+        </div>
+        <div data-dojo-type="dijit/TitlePane" data-dojo-id='bloqueDatosTransmision<tag:jsId />' id="bloqueDatosTransmision<tag:jsId />" data-dojo-props="title:'Transmisión'">
+            <table class="formulario">
+                
+                <tr>
+                    <td class="etiquetaCampo">
+                        Habilitado
+                    </td>
+                    <td>
+                        <input type="checkbox" name="habilitado" data-dojo-type="dijit/form/CheckBox" data-dojo-id="habilitado<tag:jsId />" >
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div data-dojo-type="dijit/TitlePane" data-dojo-id='bloqueDatosCalibracion<tag:jsId />' id="bloqueDatosCalibracion<tag:jsId />" data-dojo-props="title:'Calibración'">
+            <table class="formulario">
+                
+            </table>
+        </div>
+    </div>
+</div>
+<button dojoType="dijit.form.Button" iconClass="dijitIconSearch">
+    Buscar
+    <script type="dojo/method" event="onClick">
+        listadoPrincipal.setQuery({
+            
+            numero: numero<tag:jsId />.value,
+            nombre: nombre<tag:jsId />.value,
+            tipo: new String(tipo<tag:jsId />.value),
+            habilitado: habilitado<tag:jsId />.checked ? 1 : 0,
+            guardarBusqueda:'1'
+        });
+        cuadroDialogo.hide();
+    </script>
+</button>
+<button dojoType="dijit.form.Button" iconClass="dijitIconClear">
+    Limpiar
+    <script type="dojo/method" event="onClick">
+        listadoPrincipal.setQuery({
+            guardarBusqueda:'1'
+        });
+        cuadroDialogo.hide();
+    </script>
+</button>
+</div>

@@ -1,0 +1,132 @@
+<tag:header />
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                Red de sensores
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
+                    <li class="activo">Red de sensores</li>
+                </ol>
+            </section>
+
+            <section class="content">
+            	<div class="box box-solid">
+            		 <div class="box-header">
+						<!-- tools box -->
+						<div class="pull-right box-tools">
+							<!--
+							<button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="Date range">
+								<i class="fa fa-calendar"></i>
+							</button>
+							-->
+                			<button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
+								<i class="fa fa-minus"></i>
+							</button>
+						</div>
+						<i class="fa fa-map-marker"></i>
+            			<h3 class="box-title">
+							Ubicaciones (<tag:cantidad />)
+						</h3>
+					</div>
+					<div class="box-body">
+						<div id="mapa" style="height: 400px; width: 100%;"></div>
+						<br>
+						<table id="datosPrincipal" class="table table-bordered table-stripped">
+                            <thead>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    
+                                    <th>Número</th>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Comuna</th>
+                                    <th>Ult. Evento</th>
+                                </tr>
+                            </thead>
+                        </table>
+					</div>
+					<div class="box-footer">
+						Pincha sobre algún punto para obtener más información
+					</div>
+				</div>
+            </section>
+        </div>
+<tag:footer />
+    <script>
+    	var mapa;
+		function initMap() {
+			var centro={lat: -32.9, lng: -71.4167};
+			mapa=new google.maps.Map(
+				document.getElementById('mapa'), {
+					zoom: 9,
+    				center: centro
+    			}
+    		);
+    		
+    		var marker;
+    		var info;
+    		<loop:sensores>
+    		info=new google.maps.InfoWindow({});
+    		marker=new google.maps.Marker(
+    			{
+    				position: new google.maps.LatLng(<tag:sensores[].latitud />, <tag:sensores[].longitud />),
+    				map: mapa,
+    				title: '<tag:sensores[].tipo /> - <tag:sensores[].numero />'
+    			}
+    		);
+    		marker.addListener('click', function() {
+    				info.setContent('<tag:sensores[].info />');
+					info.open(mapa, this);
+				}
+			);
+    		</loop:sensores>
+		}
+		
+		function centrar(latitud,longitud) {
+			var centro={lat: latitud, lng: longitud};
+			mapa.setCenter(centro);
+			mapa.setZoom(15);
+		}
+		
+		// Algo al inicio
+        $(document).ready(function() {
+			var iconoVer=function(data,type,row) {
+                if(type=='display') {
+                	var btn='<a href="javascript:centrar(' + row.latitud + ',' + row.longitud + ');"><i class="fa fa-map-marker"></i></a>&nbsp;';
+                	btn+='<a href="serie.php?id=' + row.id + '"><i class="fa fa-line-chart"></i></a>';
+                    return(btn);
+                }
+                return(data);
+            }
+            $('#datosPrincipal').DataTable({
+                responsive:false,
+                language: {
+                    url:"../../javascript/soporte/jquery.dataTables.es.lang"
+                },
+                processing:true,
+                serverSide:true,
+                ajax: {
+                    url:"../sensores/listadoJson.php",
+                    type:"POST",
+                    dataType:"json",
+                    cache:false
+                },
+                rowId: 'id',
+                columns: [
+                    {data:"id",sortable:false,render:iconoVer},
+                    
+                    {data:"numero"},
+                    {data:"nombre"},
+                    {data:"tipo"},
+                    {data:"comuna"},
+                    {data:"ultimoEvento"},
+                ],
+                order: [[ 1,"desc" ]]
+            });
+        });
+    </script>		
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGGB-wxkUci1o_vEHNDAhAEQkZndvLAk8&callback=initMap" async defer>
+    </script>
+</body>
+</html>

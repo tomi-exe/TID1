@@ -1,0 +1,237 @@
+<tag:header />
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    <tag:moduloAccion /> registro
+                    <small><tag:moduloNombre /></small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="../inicio"><i class="fa fa-dashboard"></i>Inicio</a></li>
+                    <li><a href="listado.php"><tag:moduloNombre /></a></li>
+                    <li class="active"><tag:moduloAccion /> registro</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <form class="form-horizontal" id="formulario" action="guardar.php" METHOD="POST">
+                    <input type="hidden" name="id" value="<tag:id />">
+                    <div class="nav-tabs-custom">
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            
+                            <li id="litab1"><a href="#tab1" data-toggle="tab">General</a></li>
+                            <li class="pull-right"><a href="javascript:$('#formulario').submit();"><i class="fa fa-save"></i> Guardar</a></li>
+                            <if:modificar>
+                            <li class="pull-right"><a href="ver.php?id=<tag:id />"><i class="fa fa-undo"></i> Cancelar</a></li>
+                            <else:modificar>
+                            <li class="pull-right"><a href="listado.php"><i class="fa fa-undo"></i> Cancelar</a></li>
+                            </if:modificar>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        
+                        <div class="tab-pane" id="tab1">
+                            
+                            <div class="box box-primary box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Datos Generales</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                
+                                <div class="form-group">
+                                    <label for="numero<tag:jsId />" class="col-sm-2 control-label">Número</label>
+                                    <div class="col-sm-10"></div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombre<tag:jsId />" class="col-sm-2 control-label">Nombre</label>
+                                    <div class="col-sm-10"><input type="text" name="nombre" id="nombre<tag:jsId />" placeholder="" class="form-control text-capitalize" required maxlength="255" value="<tag:nombre />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipo<tag:jsId />" class="col-sm-2 control-label">Tipo</label>
+                                    <div class="col-sm-10"><select name="tipo" id="tipo<tag:jsId />" placeholder="" class="form-control" required >                                    <loop:tipoArr>                                    <option value="<tag:tipoArr[].id />" <tag:tipoArr[].selected />><tag:tipoArr[].nombre /></option>                                    </loop:tipoArr>                                </select> </div>
+
+                                </div>
+                            </div>
+                        </div>
+                            <div class="box box-primary box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Ubicación</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                
+                                <div class="form-group">
+                                    <label for="latitud<tag:jsId />" class="col-sm-2 control-label">Latitud</label>
+                                    <div class="col-sm-10"><input type="number" name="latitud" id="latitud<tag:jsId />" placeholder="" class="form-control"  value="<tag:latitud />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="longitud<tag:jsId />" class="col-sm-2 control-label">Longitud</label>
+                                    <div class="col-sm-10"><input type="number" name="longitud" id="longitud<tag:jsId />" placeholder="" class="form-control"  value="<tag:longitud />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="direccion<tag:jsId />" class="col-sm-2 control-label">Dirección</label>
+                                    <div class="col-sm-10"><input type="text" name="direccion" id="direccion<tag:jsId />" placeholder="Calle, Avenida, ..." class="form-control text-capitalize"  maxlength="255" value="<tag:direccion />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="comuna<tag:jsId />" class="col-sm-2 control-label">Comuna</label>
+                                    <div class="col-sm-10"><select name="comuna" id="comuna<tag:jsId />" placeholder="" class="form-control comunas_ST ajaxStore"  ><option value="<tag:comuna />" selected><tag:comuna_nombreLista /></option>                                </select></div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="referencia<tag:jsId />" class="col-sm-2 control-label">Referencia</label>
+                                    <div class="col-sm-10"><textarea name="referencia" id="referencia<tag:jsId />" placeholder="" class="form-control"  ><tag:referencia /></textarea></div>
+
+                                </div>
+                            </div>
+                        </div>
+                            <div class="box box-primary box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Transmisión</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                
+                                <div class="form-group">
+                                    <label for="periodo<tag:jsId />" class="col-sm-2 control-label">Período [seg]</label>
+                                    <div class="col-sm-10"><input type="digits" name="periodo" id="periodo<tag:jsId />" placeholder="" class="form-control" required value="<tag:periodo />" > Segundos, factor de 8</div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="contrasena<tag:jsId />" class="col-sm-2 control-label">Contraseña</label>
+                                    <div class="col-sm-10"><input type="text" name="contrasena" id="contrasena<tag:jsId />" placeholder="" class="form-control" required maxlength="255" value="<tag:contrasena />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="habilitado<tag:jsId />" class="col-sm-2 control-label">Habilitado</label>
+                                    <div class="col-sm-10"><div class="checkbox icheck"><input type="checkbox" name="habilitado" id="habilitado<tag:jsId />" <tag:habilitado />></div></div>
+
+                                </div>
+                            </div>
+                        </div>
+                            <div class="box box-primary box-solid">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Calibración</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                
+                                <div class="form-group">
+                                    <label for="maximo1<tag:jsId />" class="col-sm-2 control-label">Máximo S1</label>
+                                    <div class="col-sm-10"><input type="digits" name="maximo1" id="maximo1<tag:jsId />" placeholder="" class="form-control" required value="<tag:maximo1 />" > Use el promedio de mínimo 3 mediciones en 100% de humedad para determinar los valores máximos</div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="profundidad1<tag:jsId />" class="col-sm-2 control-label">Profundidad 1 (cm)</label>
+                                    <div class="col-sm-10"><input type="digits" name="profundidad1" id="profundidad1<tag:jsId />" placeholder="" class="form-control" required value="<tag:profundidad1 />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="maximo2<tag:jsId />" class="col-sm-2 control-label">Máximo S2</label>
+                                    <div class="col-sm-10"><input type="digits" name="maximo2" id="maximo2<tag:jsId />" placeholder="" class="form-control" required value="<tag:maximo2 />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="profundidad2<tag:jsId />" class="col-sm-2 control-label">Profundidad 2 (cm)</label>
+                                    <div class="col-sm-10"><input type="digits" name="profundidad2" id="profundidad2<tag:jsId />" placeholder="" class="form-control" required value="<tag:profundidad2 />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="maximo3<tag:jsId />" class="col-sm-2 control-label">Máximo S3</label>
+                                    <div class="col-sm-10"><input type="digits" name="maximo3" id="maximo3<tag:jsId />" placeholder="" class="form-control" required value="<tag:maximo3 />" > </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="profundidad3<tag:jsId />" class="col-sm-2 control-label">Profunidad 3 (cm)</label>
+                                    <div class="col-sm-10"><input type="digits" name="profundidad3" id="profundidad3<tag:jsId />" placeholder="" class="form-control" required value="<tag:profundidad3 />" > </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <script>
+            function ajaxStores() {
+                window.ultimoSelect='';
+                
+                
+                $(".comunas_ST").select2({
+                   width:'resolve',
+                   ajax: {
+                       url: "../comunas/listadoJson.php",
+                       type: "POST",
+                       dataType: "json",
+                       delay: 250,
+                       data: function(params) {
+                           return {
+                               _busqueda: params.term,
+                           };
+                       },
+                       processResults: function(data,params) {
+                           return {
+                               results: $.map(data.data, function(item) {
+                                   return {
+                                       text: item.nombreLista,
+                                       id: item.id
+                                   }
+                               })
+                           };
+                       },
+                       cache: false
+                   },
+                   miniumInputLength: 1,
+               }).on("select2:select",function(e) {
+                   window.ultimoSelect=$(this).val();
+               });
+            }
+
+            $(function() {
+                $('#tab<tag:tab />').addClass("active");
+                $('#litab<tag:tab />').addClass("active");
+
+                // Iniciar extensiones UI
+                $(".select2").select2();
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-blue',
+                    radioClass: 'iradio_flat-blue'
+                });
+
+                ajaxStores();
+
+                
+                
+
+                $('#formulario').validate({
+                    submitHandler: function(form,evt) {
+                        evt.preventDefault();
+                        procesarFormulario('formulario');
+                    }
+                });
+            });
+        </script>
+    <tag:footer />
+</body>
+</html>

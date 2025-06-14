@@ -1,0 +1,41 @@
+<div style="height:98%;overflow:auto;">
+<div data-dojo-type="dijit/layout/TabContainer" doLayout="false">
+    
+    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-id="tab1<tag:jsId />" id="tab1<tag:jsId />" data-dojo-props="title:'General'">
+        
+        <div data-dojo-type="dijit/TitlePane" data-dojo-id='bloqueDatosGenerales<tag:jsId />' id="bloqueDatosGenerales<tag:jsId />" data-dojo-props="title:'Datos Generales'">
+            <table class="formulario">
+                
+                <tr>
+                    <td class="etiquetaCampo">
+                        Nombre
+                    </td>
+                    <td>
+                        <input type="text" name="nombre" data-dojo-id="nombre<tag:jsId />" required="false" class="campoCampo" value="<tag:nombre />" data-dojo-type="dijit/form/ValidationTextBox" data-dojo-props="trim:true">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<button dojoType="dijit.form.Button" iconClass="dijitIconSearch">
+    Buscar
+    <script type="dojo/method" event="onClick">
+        listadoPrincipal.setQuery({
+            
+            nombre: nombre<tag:jsId />.value,
+            guardarBusqueda:'1'
+        });
+        cuadroDialogo.hide();
+    </script>
+</button>
+<button dojoType="dijit.form.Button" iconClass="dijitIconClear">
+    Limpiar
+    <script type="dojo/method" event="onClick">
+        listadoPrincipal.setQuery({
+            guardarBusqueda:'1'
+        });
+        cuadroDialogo.hide();
+    </script>
+</button>
+</div>

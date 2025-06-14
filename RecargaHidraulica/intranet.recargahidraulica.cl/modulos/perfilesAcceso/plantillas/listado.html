@@ -1,0 +1,78 @@
+<tag:header />
+<div class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            <tag:moduloNombre />
+            <small>Registros</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="../inicio"><i class="fa fa-dashboard"></i>Inicio</a></li>
+            <li><a href="listado.php"><tag:moduloNombre /></a></li>
+            <li class="active">Registros</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="box box-primary box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Resultados</h3>
+                <div class="box-tools pull-right">
+                    <if:agregarRegistro>
+                    <button type="button" class="btn btn-box-tool" onClick="window.location.href='agregar.php';">
+                        <i class="fa fa-plus"></i> Nuevo
+                    </button>
+                    </if:agregarRegistro>
+
+                    <button type="button" class="btn btn-box-tool" onClick="window.location.href='exportar.php';">
+                        <i class="fa fa-file-excel-o"></i> Exportar
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <table id="datosPrincipal" class="table table-bordered table-stripped">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+<tag:footer />
+<script>
+    $(function () {
+        var iconoVer=function(data,type,row) {
+            if(type=='display') {
+                return('<a href="ver.php?id=' + row.id + '"><i class="fa fa-edit"></i></a>&nbsp;');
+            }
+            return(data);
+        }
+        $('#datosPrincipal').DataTable({
+            responsive:true,
+            language: {
+                url:"../../javascript/soporte/jquery.dataTables.es.lang"
+            },
+            processing:true,
+            serverSide:true,
+            ajax: {
+                url:"listadoJson.php",
+                type:"GET",
+                dataType:"json",
+                cache:false
+            },
+            rowId: 'id',
+            columns: [
+                {data:"id",sortable:false,render:iconoVer},
+                
+                {data:"nombre"},
+            ]
+        });
+
+        
+    });
+</script>
