@@ -16,6 +16,7 @@
     $mensaje=array("codigo"=>"1","accion"=>"0","mensaje"=>"Las credenciales no son válidas");
     if(!strlen($usuario)>0 || !strlen($contrasena)>0) {
         header('Location: index.php?msg=1&usuario=' . $usuario);
+        exit; // evitar seguir procesando cuando faltan credenciales
     } else {
         $sql=new MySQL($CONF['bbdd'],0);
         $perfilAccesoBD=new PerfilAccesoBD($sql);
