@@ -1,2 +1,3 @@
 # TID1
-trabajo sensonres
+
+trabajo sensores :D
